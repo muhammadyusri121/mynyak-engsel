@@ -26,7 +26,7 @@ git clone https://github.com/purplemashu/mynyak-engsel
 ```
 5. Open the folder
 ```
-cd myxl-cli
+cd mynyak-engsel
 ```
 6. Install dependencies
 ```
