@@ -1,6 +1,9 @@
 import json
 import os
 import sys
+import banner
+ascii_art = banner.load("https://me.mashu.lol/mebanner.png", globals())
+
 from datetime import datetime
 from api_request import get_otp, submit_otp, save_tokens, get_package, purchase_package, get_addons
 from purchase_api import show_multipayment, show_qris_payment, settlement_bounty
@@ -10,6 +13,7 @@ from util import display_html
 def clear_screen():
     print("clearing screen...")
     os.system('cls' if os.name == 'nt' else 'clear')
+    ascii_art.to_terminal(columns=50)
 
 def pause():
     input("\nTekan Enter untuk lanjut...")
@@ -37,6 +41,7 @@ def show_main_menu(number, balance, balance_expired_at):
     print("2. Lihat Paket Saya")
     print("3. Beli Paket XUT")
     print("4. Beli Paket Berdasarkan Family Code")
+    print("5. Beli Paket Berdasarkan Family Code (Enterprise)")
     print("99. Tutup aplikasi")
     print("--------------------------")
         
@@ -63,6 +68,7 @@ def show_account_menu():
             AuthInstance.add_refresh_token(int(number), refresh_token)
             AuthInstance.load_tokens()
             users = AuthInstance.refresh_tokens
+            active_user = AuthInstance.get_active_user()
             
             
             if add_user:

@@ -1,7 +1,10 @@
-import sys
-import banner_cfg
-from api_request import *
+from dotenv import load_dotenv
+
+load_dotenv() 
+
+import sys, requests, json
 from ui import *
+from api_request import *
 from paket_xut import get_package_xut
 from my_package import fetch_my_packages
 from paket_custom_family import get_packages_by_family
@@ -17,9 +20,9 @@ def main():
             balance = get_balance(AuthInstance.api_key, active_user["tokens"]["id_token"])
             balance_remaining = balance.get("remaining")
             balance_expired_at = balance.get("expired_at")
-           
+
             show_main_menu(active_user["number"], balance_remaining, balance_expired_at)
-            
+
             choice = input("Pilih menu: ")
             if choice == "1":
                 selected_user_number = show_account_menu()
@@ -41,6 +44,11 @@ def main():
                 if family_code == "99":
                     continue
                 get_packages_by_family(family_code)
+            elif choice == "5":
+                family_code = input("Enter family code (or '99' to cancel): ")
+                if family_code == "99":
+                    continue
+                get_packages_by_family(family_code, is_enterprise=True)
             elif choice == "99":
                 print("Exiting the application.")
                 sys.exit(0)
